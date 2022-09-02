@@ -1,0 +1,126 @@
+{
+  "employees": [
+    {
+      "id":2201,
+      "first_name": "Olimpia",
+      "middle_name": "Erwéi",
+      "last_name": "Drinkeld",
+      "email": "odrinkeld0@wikipedia.org",
+      "phone_no": "432-132-0511",
+      "role": 1,
+      "address": "Afghanistan",
+      "doj":"06/12/1998"
+    },
+
+    {
+      "id":2202,
+      "first_name": "Nolan",
+      "middle_name": "Marie-thérèse",
+      "last_name": "Corkell",
+      "email": "ncorkell1@trellian.com",
+      "phone_no": "139-649-8238",
+      "role": 2,
+      "address": "Afghanistan",
+      "doj":"02/12/1998"
+    },
+
+    {
+      "id":2203,
+      "first_name": "Constancia",
+      "middle_name": "Léa",
+      "last_name": "Edds",
+      "email": "cedds2@sbwire.com",
+      "phone_no": "946-622-7849",
+      "role": 2,
+      "address": "Afghanistan",
+      "doj":"04/10/1998"
+    },
+
+    {
+      "id":2204,
+      "first_name": "Yance",
+      "middle_name": "Styrbjörn",
+      "last_name": "Agus",
+      "email": "yagus3@alexa.com",
+      "phone_no": "865-889-1912",
+      "role": 0,
+      "address": "Afghanistan",
+      "doj":"03/03/1998"
+    },
+
+    {
+      "id":2205,
+      "first_name": "Margaretta",
+      "middle_name": "Håkan",
+      "last_name": "Ruppel",
+      "email": "mruppel4@addthis.com",
+      "phone_no": "486-588-5170",
+      "role": 1,
+      "address": "Afghanistan",
+      "doj":"10/10/1998"
+    },
+
+    {
+      "id":2206,
+      "first_name": "Bobette",
+      "middle_name": "Médiamass",
+      "last_name": "Ethelstone",
+      "email": "bethelstone5@unblog.fr",
+      "phone_no": "587-904-2220",
+      "role": 0,
+      "address": "India",
+      "doj":"06/01/1998"
+    },
+
+    {
+      "id":2207,
+      "first_name": "Dukey",
+      "middle_name": "Méghane",
+      "last_name": "Jell",
+      "email": "djella@paypal.com",
+      "phone_no": "537-431-6250",
+      "role": 2,
+      "address": "Afghanistan",
+      "doj":"04/12/1995"
+    },
+
+    {
+      "id":2208,
+      "first_name": "Lindsy",
+      "middle_name": "Kallisté",
+      "last_name": "Gilcrist",
+      "email": "lgilcristb@sun.com",
+      "phone_no": "294-229-4498",
+      "role": 0,
+      "address": "Afghanistan",
+      "doj":"02/12/1998"
+    },
+
+    {
+      "id":2209,
+      "first_name": "Karla",
+      "middle_name": "Ráo",
+      "last_name": "Radoux",
+      "email": "kradouxc@163.com",
+      "phone_no": "424-832-9968",
+      "role": 1,
+      "address": "Afghanistan",
+      "doj":"01/10/1998"
+    },
+
+    {
+      "id":22010,
+      "first_name": "Fifi",
+      "middle_name": "Angélique",
+      "last_name": "Claeskens",
+      "email": "fclaeskense@linkedin.com",
+      "phone_no": "725-761-7479",
+      "role": 2,
+      "address": "Afghanistan",
+      "doj":"11/10/1998"
+    }
+  ]
+}
+
+
+    
