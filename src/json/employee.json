@@ -1,0 +1,123 @@
+{
+    "employees": [
+      {  
+        "id":"T2201",
+        "first_name": "Olimpia",
+        "middle_name": "Erwéi",
+        "last_name": "Drinkeld",
+        "email": "odrinkeld0@wikipedia.org",
+        "phone_no": "432-132-0511",
+        "role":"Admin",
+        "address": "Afghanistan",
+        "doj": "04/12/1990",
+        "isEdit": false
+      
+      },
+      {  "id":"T2202",
+        "first_name": "Nolan",
+        "middle_name": "Marie-thérèse",
+        "last_name": "Corkell",
+        "email": "ncorkell1@trellian.com",
+        "phone_no": "139-649-8238",
+        "role": "SuperAdmin",
+        "address": "Afghanistan",
+        "doj":"10/12/1990",
+        "isEdit": false
+      },
+      {
+        "id":"T2203",
+        "first_name": "Constancia",
+        "middle_name": "Léa",
+        "last_name": "Edds",
+        "email": "cedds2@sbwire.com",
+        "phone_no": "946-622-7849",
+        "role": "Subscriber",
+        "address": "Afghanistan",
+        "doj":"12/12/2012",
+        "isEdit": false
+      },
+      {
+        "id":"T2204",      
+        "first_name": "Yance",
+        "middle_name": "Styrbjörn",
+        "last_name": "Agus",
+        "email": "yagus3@alexa.com",
+        "phone_no": "865-889-1912",
+        "role": "Subscriber",
+        "address": "Afghanistan",
+        "doj":"12/04/1995",
+        "isEdit": false
+      },
+      {
+        "id":"T2205",       
+        "first_name": "Margaretta",
+        "middle_name": "Håkan",
+        "last_name": "Ruppel",
+        "email": "mruppel4@addthis.com",
+        "phone_no": "486-588-5170",
+        "role": "SuperAdmin",
+        "address": "Afghanistan",
+        "doj":"05/10/1993",
+        "isEdit": false
+      },
+      {
+        "id":"T2206",
+        "first_name": "Bobette",
+        "middle_name": "Médiamass",
+        "last_name": "Ethelstone",
+        "email": "bethelstone5@unblog.fr",
+        "phone_no": "587-904-2220",
+        "role": "Admin",
+        "address": "Afghanistan",
+        "doj":"10/10/2010",
+        "isEdit": false
+      },
+      {
+        "id":"T2207",
+        "first_name": "Bud",
+        "middle_name": "Marie-josée",
+        "last_name": "Takos",
+        "email": "btakos6@disqus.com",
+        "phone_no": "925-541-3707",
+        "role": "Subscriber",
+        "address": "Afghanistan",
+        "doj":"12/12/1992",
+        "isEdit": false
+      },
+      {  "id":"T2208",
+        "first_name": "Johna",
+        "middle_name": "Dafnée",
+        "last_name": "Maggi",
+        "email": "jmaggi7@webs.com",
+        "phone_no": "793-630-4116",
+        "role": "SuperAdmin",
+        "address": "Afghanistan",
+        "doj":"10/05/1996",
+        "isEdit": false
+      },
+      {
+        "id":"T2209",
+        "first_name": "Amelia",
+        "middle_name": "Adélaïde",
+        "last_name": "Dumbleton",
+        "email": "adumbleton8@techcrunch.com",
+        "phone_no": "818-817-8740",
+        "role": "Subscriber",
+        "address": "Afghanistan",
+        "doj":"10/02/2005",
+        "isEdit": false
+      },
+      {
+        "id":"T22010",
+        "first_name": "Rasla",
+        "middle_name": "Inès",
+        "last_name": "Urvoy",
+        "email": "rurvoy9@artisteer.com",
+        "phone_no": "687-290-7249",
+        "role": "Admin",
+        "address": "Afghanistan",
+        "doj":"12/12/1991",
+        "isEdit": false
+      }
+    ]
+  }

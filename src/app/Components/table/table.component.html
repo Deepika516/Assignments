@@ -1,0 +1,116 @@
+<!-- NAVBAR AREA -->
+<nav class="navbar navbar-light bg-primary">
+  <div class="container-fluid">
+    <h1 style="color:white;"> Angular Crud</h1>
+    <button id="loadData" class="btn btn-success" (click)="onClick()">Load Data</button>
+  </div>
+</nav>
+
+
+<!-- TABLE DATA -->
+  <div class="container-fluid" *ngIf="hideTable">
+  <table class="table mt-3">
+    <thead class="table-light colspan=2" >
+        <tr>
+          <th>Id</th>
+          <th>First_Name</th>
+          <th>Middle_Name</th>
+          <th>Last_Name</th>
+          <th>Email</th>
+          <th>Contact</th>   
+          <th>Role</th>
+          <th>Address</th>
+          <th>DOJ</th>
+          <th colspan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody id="tablebody">
+      <tr *ngFor="let user of employeesjson.employees;index as i" [attr.id]="user.id">
+        <td>
+              {{ user.id }}
+        </td>
+        <td>
+          <span *ngIf="!user.isEdit"> 
+             {{ user.first_name }}
+          </span> 
+          <input type="text" class="form-control" [(ngModel)]="user.first_name" *ngIf="user.isEdit"/> 
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+            {{ user.middle_name }}
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="user.middle_name" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+            {{ user.last_name }}
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="user.last_name" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+            {{ user.email }}
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="user.email" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+             {{ user.phone_no}}
+            </span>
+          <input type="text" class="form-control" [(ngModel)]="user.phone_no" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+            <span *ngIf="!user.isEdit">
+              {{user.role}}
+              </span>
+          <div class="form-group">
+            <select class="dropdown"  [(ngModel)]="user.role" *ngIf="user.isEdit" required>
+              <option selected></option>
+              <option [value]="role" *ngFor="let role of roles">{{role}}</option>
+            </select>
+          </div> 
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+            {{ user.address}}
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="user.address" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+            {{user.doj|date}}
+          </span>
+          <input type="text" class="form-control" [(ngModel)]="user.doj" *ngIf="user.isEdit"/>
+        </td>
+
+        <td>
+          <span *ngIf="!user.isEdit">
+              <button type="button" id="btnEdit" class="btn btn-info" (click)="onEditClick(user)">Edit</button>
+          </span>
+          <span *ngIf="user.isEdit">
+            <button type="button" id="btnSave" class="btn btn-info" (click)="onSaveClick(user)">Save</button>
+          </span>
+        </td>
+
+        <td >
+          <span *ngIf="!user.isEdit">
+              <button class="btn btn-danger" id="btnDelete" (click)="onDelete(user.id)">Delete</button>
+          </span>
+          <span *ngIf="user.isEdit">
+            <button class="btn btn-danger" id="btnCancel" (click)="onCancel(user)">Cancel</button>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
