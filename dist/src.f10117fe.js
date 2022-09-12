@@ -128,7 +128,7 @@ module.exports = {
     "phone_no": "432-132-0511",
     "role": 1,
     "address": "Afghanistan",
-    "doj": "06/12/1998"
+    "doj": "06-12-1998"
   }, {
     "id": 2202,
     "first_name": "Nolan",
@@ -138,7 +138,7 @@ module.exports = {
     "phone_no": "139-649-8238",
     "role": 2,
     "address": "Afghanistan",
-    "doj": "02/12/1998"
+    "doj": "02-12-1998"
   }, {
     "id": 2203,
     "first_name": "Constancia",
@@ -148,7 +148,7 @@ module.exports = {
     "phone_no": "946-622-7849",
     "role": 2,
     "address": "Afghanistan",
-    "doj": "04/10/1998"
+    "doj": "04-10-1998"
   }, {
     "id": 2204,
     "first_name": "Yance",
@@ -158,7 +158,7 @@ module.exports = {
     "phone_no": "865-889-1912",
     "role": 0,
     "address": "Afghanistan",
-    "doj": "03/03/1998"
+    "doj": "03-03-1998"
   }, {
     "id": 2205,
     "first_name": "Margaretta",
@@ -168,7 +168,7 @@ module.exports = {
     "phone_no": "486-588-5170",
     "role": 1,
     "address": "Afghanistan",
-    "doj": "10/10/1998"
+    "doj": "10-10-1998"
   }, {
     "id": 2206,
     "first_name": "Bobette",
@@ -178,7 +178,7 @@ module.exports = {
     "phone_no": "587-904-2220",
     "role": 0,
     "address": "India",
-    "doj": "06/01/1998"
+    "doj": "06-01-1998"
   }, {
     "id": 2207,
     "first_name": "Dukey",
@@ -188,7 +188,7 @@ module.exports = {
     "phone_no": "537-431-6250",
     "role": 2,
     "address": "Afghanistan",
-    "doj": "04/12/1995"
+    "doj": "04-12-1995"
   }, {
     "id": 2208,
     "first_name": "Lindsy",
@@ -198,7 +198,7 @@ module.exports = {
     "phone_no": "294-229-4498",
     "role": 0,
     "address": "Afghanistan",
-    "doj": "02/12/1998"
+    "doj": "02-12-1998"
   }, {
     "id": 2209,
     "first_name": "Karla",
@@ -208,7 +208,7 @@ module.exports = {
     "phone_no": "424-832-9968",
     "role": 1,
     "address": "Afghanistan",
-    "doj": "01/10/1998"
+    "doj": "01-10-1998"
   }, {
     "id": 22010,
     "first_name": "Fifi",
@@ -218,7 +218,7 @@ module.exports = {
     "phone_no": "725-761-7479",
     "role": 2,
     "address": "Afghanistan",
-    "doj": "11/10/1998"
+    "doj": "11-10-1998"
   }]
 };
 },{}],"node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
@@ -6339,7 +6339,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     Tooltip: jt
   };
 });
-},{"@popperjs/core":"node_modules/@popperjs/core/lib/index.js"}],"src/index.ts":[function(require,module,exports) {
+},{"@popperjs/core":"node_modules/@popperjs/core/lib/index.js"}],"src/common/enums/role.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Role = void 0;
+var Role;
+
+(function (Role) {
+  Role[Role["SuperAdmin"] = 0] = "SuperAdmin";
+  Role[Role["Admin"] = 1] = "Admin";
+  Role[Role["Subscriber"] = 2] = "Subscriber";
+})(Role = exports.Role || (exports.Role = {}));
+},{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
@@ -6366,7 +6380,9 @@ var employees_json_1 = __importDefault(require("./employees.json"));
 
 require("./css/bootstrap.min.css");
 
-require("./js/bootstrap.min.js"); //import { event } from "jquery";
+require("./js/bootstrap.min.js");
+
+var role_1 = require("./common/enums/role"); //import { event } from "jquery";
 
 
 var employees = employees_json_1.default.employees;
@@ -6384,11 +6400,14 @@ function buildColumns() {
 }
 
 function refresh() {
+  var role = role_1.Role; //    const roles=["SuperAdmin","Admin","Subscriber"]
+
   if (!tableContainer) return;
   var columns = buildColumns();
   var tbody = document.getElementById('tablebody');
   tbody.innerHTML = "";
   employees.forEach(function (emp) {
+    // console.log(emp)
     var row = document.createElement("tr");
     row.setAttribute("id", String(emp.id));
     var columnElements = columns.map(function (col) {
@@ -6407,9 +6426,12 @@ function editOperation(e, empId) {
   var emp = employees.find(function (e) {
     return e.id == empId;
   });
+  debugger;
 
   if (!!emp) {
+    debugger;
     var columnElements = columns.map(function (col) {
+      console.log(col);
       var inputControl = document.createElement("input");
       inputControl.setAttribute("type", "text");
       inputControl.value = emp[col];
@@ -6465,15 +6487,42 @@ function createEditButton(emp) {
 
   editButton.addEventListener("click", function (e) {
     var currentRow = e.target.parentElement;
-    var columns = buildColumns(); // let emp=employees.find(e=>e.id==empId);
+    var columns = buildColumns();
+    console.log(columns); // let emp=employees.find(e=>e.id==empId);
 
     if (!!emp) {
-      var columnElements = columns.map(function (col) {
-        var inputControl = document.createElement("input");
-        inputControl.setAttribute("type", "text");
+      var columnElements = columns.map(function (col, i) {
+        debugger;
+        var inputControl;
+
+        if (col == "role") {
+          inputControl = document.createElement("select"); // inputControl.setAttribute("type", "select");
+
+          Object.keys(role_1.Role).forEach(function (ele) {
+            if (isNaN(ele)) {
+              var option = document.createElement('option');
+              option.value = role_1.Role[ele];
+              option.innerText = ele;
+              inputControl.appendChild(option);
+            }
+
+            inputControl.value = emp[col];
+          });
+        } else if (col == "doj") {
+          debugger;
+          inputControl = document.createElement("input");
+          inputControl.setAttribute("type", "date");
+          inputControl.setAttribute("value", emp[col]);
+        } else {
+          inputControl = document.createElement("input");
+          debugger;
+          inputControl.setAttribute("type", "text");
+          inputControl.setAttribute("value", emp[col]);
+        } // const inputControl: any = document.createElement("input");
+
+
         inputControl.setAttribute("class", "form-control");
         inputControl.setAttribute("id", col);
-        inputControl.setAttribute("value", emp[col]);
         inputControl.addEventListener("change", function (e) {
           onInputChange(e, emp);
         });
@@ -6528,7 +6577,7 @@ loadBtn.addEventListener("click", function (e) {
   loadBtn.innerText = "Refresh data";
   refresh();
 });
-},{"./employees.json":"src/employees.json","./css/bootstrap.min.css":"src/css/bootstrap.min.css","./js/bootstrap.min.js":"src/js/bootstrap.min.js"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./employees.json":"src/employees.json","./css/bootstrap.min.css":"src/css/bootstrap.min.css","./js/bootstrap.min.js":"src/js/bootstrap.min.js","./common/enums/role":"src/common/enums/role.ts"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -6556,7 +6605,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50904" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52914" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

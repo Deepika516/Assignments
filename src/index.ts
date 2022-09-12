@@ -15,7 +15,7 @@ const thead:any=document.querySelector("#thead");
 let X :IUser<string,number>;
 let Y :IUser<number,string>;
 
-            thead.style.display = "none";
+ thead.style.display = "none";
            
 
 function buildColumns<T>(): string[] {
@@ -23,19 +23,25 @@ function buildColumns<T>(): string[] {
     const columns = Object.keys(employee);
     return columns;
 }
+
 function refresh<X>(): any {
+   const role=Role;
+//    const roles=["SuperAdmin","Admin","Subscriber"]
     if (!tableContainer) return;
     const columns = buildColumns();
   
     const tbody: any = document.getElementById('tablebody');
     tbody.innerHTML = "";
     employees.forEach((emp) => {
+        
+        // console.log(emp)
         const row: HTMLTableRowElement = document.createElement("tr");
         row.setAttribute("id", String(emp.id));
         const columnElements = columns.map((col) => {
             const colE1 = document.createElement("td");
             colE1.innerText = (emp as any)[col] as string;
             return colE1;
+            
         });
 
         row.append(...columnElements, createEditButton(emp), createDeleteButton());
@@ -47,8 +53,11 @@ function editOperation<T>(e: any, empId: Number): void {
     let currentRow: HTMLBodyElement = e.target.parentElement;
     const columns = buildColumns();
     let emp = employees.find(e => e.id == empId);
+    debugger
     if (!!emp) {
+        debugger
         const columnElements = columns.map((col) => {
+            console.log(col);
             const inputControl: any = document.createElement("input");
             inputControl.setAttribute("type", "text");
             inputControl.value = (emp as any)[col] as string;
@@ -108,14 +117,46 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
 
         let currentRow: HTMLBodyElement = e.target.parentElement;
         const columns = buildColumns();
+        console.log(columns);
         // let emp=employees.find(e=>e.id==empId);
         if (!!emp) {
-            const columnElements = columns.map((col) => {
-                const inputControl: any = document.createElement("input");
+            const columnElements = columns.map((col,i) => {
+                
+                debugger
+                let inputControl: any ;
+                if (col=="role")
+                {
+                     inputControl= document.createElement("select");
+                    // inputControl.setAttribute("type", "select");
+                    Object.keys(Role).forEach(function (ele:any) {
+                        if (isNaN(ele)) {
+                            var option = document.createElement('option');
+                            option.value = Role[ele];
+                            option.innerText = ele;
+                            inputControl.appendChild(option);
+                        }
+                       
+                        inputControl.value = ((emp as any)[col] as number);
+                    });
+                }
+                else if(col=="doj")
+                {
+                    debugger
+                inputControl = document.createElement("input");
+                inputControl.setAttribute("type", "date");
+                inputControl.setAttribute("value", (emp as any)[col]);
+                }
+                else
+                {
+                    inputControl = document.createElement("input");
+                    debugger
                 inputControl.setAttribute("type", "text");
+                inputControl.setAttribute("value", (emp as any)[col]);
+                }
+                // const inputControl: any = document.createElement("input");
                 inputControl.setAttribute("class","form-control")
                 inputControl.setAttribute("id", col)
-                inputControl.setAttribute("value", (emp as any)[col]);
+                
                 inputControl.addEventListener("change", (e: any) => {
                     onInputChange(e, emp)
                 })
