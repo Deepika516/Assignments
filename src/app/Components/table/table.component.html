@@ -6,8 +6,7 @@
   </div>
 </nav>
 
-
-<!-- TABLE DATA -->
+<!-- SHOWING TABLE HEADER ROW DATA-->
   <div class="container-fluid" *ngIf="hideTable">
   <table class="table mt-3">
     <thead class="table-light colspan=2" >
@@ -24,11 +23,14 @@
           <th colspan="2">Action</th>
         </tr>
     </thead>
+
+<!-- TO SHOW TABLE BODY DATA THRU INTERPOLATION -->
     <tbody id="tablebody">
       <tr *ngFor="let user of employeesjson.employees;index as i" [attr.id]="user.id">
         <td>
               {{ user.id }}
         </td>
+
         <td>
           <span *ngIf="!user.isEdit"> 
              {{ user.first_name }}
@@ -65,38 +67,38 @@
         </td>
 
         <td>
-            <span *ngIf="!user.isEdit">
+              <span *ngIf="!user.isEdit">
               {{user.role}}
               </span>
-          <div class="form-group">
-            <select class="dropdown"  [(ngModel)]="user.role" *ngIf="user.isEdit" required>
-              <option selected></option>
-              <option [value]="role" *ngFor="let role of roles">{{role}}</option>
-            </select>
-          </div> 
+              <div class="form-group">
+                  <select class="dropdown"  [(ngModel)]="user.role" *ngIf="user.isEdit" required>
+                       <option selected></option>
+                       <option [value]="role" *ngFor="let role of roles">{{role}}</option>
+                  </select>
+               </div> 
         </td>
 
         <td>
-          <span *ngIf="!user.isEdit">
-            {{ user.address}}
-          </span>
-          <input type="text" class="form-control" [(ngModel)]="user.address" *ngIf="user.isEdit"/>
+            <span *ngIf="!user.isEdit">
+                 {{ user.address}}
+            </span>
+            <input type="text" class="form-control" [(ngModel)]="user.address" *ngIf="user.isEdit"/>
         </td>
 
         <td>
-          <span *ngIf="!user.isEdit">
-            {{user.doj|date}}
-          </span>
-          <input type="text" class="form-control" [(ngModel)]="user.doj" *ngIf="user.isEdit"/>
+            <span *ngIf="!user.isEdit">
+                {{user.doj|date}}
+            </span>
+            <input type="text" class="form-control" [(ngModel)]="user.doj" *ngIf="user.isEdit"/>
         </td>
 
         <td>
-          <span *ngIf="!user.isEdit">
-              <button type="button" id="btnEdit" class="btn btn-info" (click)="onEditClick(user)">Edit</button>
-          </span>
-          <span *ngIf="user.isEdit">
-            <button type="button" id="btnSave" class="btn btn-info" (click)="onSaveClick(user)">Save</button>
-          </span>
+              <span *ngIf="!user.isEdit">
+                   <button type="button" id="btnEdit" class="btn btn-info" (click)="onEditClick(user)">Edit</button>
+              </span>
+              <span *ngIf="user.isEdit">
+                   <button type="button" id="btnSave" class="btn btn-info" (click)="onSaveClick(user)">Save</button>
+              </span>
         </td>
 
         <td >
@@ -104,7 +106,7 @@
               <button class="btn btn-danger" id="btnDelete" (click)="onDelete(user.id)">Delete</button>
           </span>
           <span *ngIf="user.isEdit">
-            <button class="btn btn-danger" id="btnCancel" (click)="onCancel(user)">Cancel</button>
+             <button class="btn btn-danger" id="btnCancel" (click)="onCancel(user)">Cancel</button>
           </span>
         </td>
       </tr>
