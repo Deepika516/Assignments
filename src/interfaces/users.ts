@@ -1,4 +1,4 @@
-import { Role } from "../cmn/enums/role";
+import { Role } from "../enums/role.enum";
 
 export interface IUser<T,U>
  {

@@ -288,7 +288,7 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel/src/builtins/bundle-url.js"}],"src/css/bootstrap.min.css":[function(require,module,exports) {
+},{"./bundle-url":"node_modules/parcel/src/builtins/bundle-url.js"}],"src/bootstrap.min.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -3368,7 +3368,7 @@ var _createPopper = require("./createPopper.js");
 var _popper = require("./popper.js");
 
 var _popperLite = require("./popper-lite.js");
-},{"./enums.js":"node_modules/@popperjs/core/lib/enums.js","./modifiers/index.js":"node_modules/@popperjs/core/lib/modifiers/index.js","./createPopper.js":"node_modules/@popperjs/core/lib/createPopper.js","./popper.js":"node_modules/@popperjs/core/lib/popper.js","./popper-lite.js":"node_modules/@popperjs/core/lib/popper-lite.js"}],"src/js/bootstrap.min.js":[function(require,module,exports) {
+},{"./enums.js":"node_modules/@popperjs/core/lib/enums.js","./modifiers/index.js":"node_modules/@popperjs/core/lib/modifiers/index.js","./createPopper.js":"node_modules/@popperjs/core/lib/createPopper.js","./popper.js":"node_modules/@popperjs/core/lib/popper.js","./popper-lite.js":"node_modules/@popperjs/core/lib/popper-lite.js"}],"src/bootstrap.min.js":[function(require,module,exports) {
 var define;
 function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
 
@@ -6339,7 +6339,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     Tooltip: jt
   };
 });
-},{"@popperjs/core":"node_modules/@popperjs/core/lib/index.js"}],"src/common/enums/role.ts":[function(require,module,exports) {
+},{"@popperjs/core":"node_modules/@popperjs/core/lib/index.js"}],"src/enums/role.enum.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6374,16 +6374,15 @@ var __importDefault = this && this.__importDefault || function (mod) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
-}); //import "./styles.css";                                 
+});
 
 var employees_json_1 = __importDefault(require("./employees.json"));
 
-require("./css/bootstrap.min.css");
+require("../src/bootstrap.min.css");
 
-require("./js/bootstrap.min.js");
+require("../src/bootstrap.min.js");
 
-var role_1 = require("./common/enums/role"); //import { event } from "jquery";
-
+var role_enum_1 = require("./enums/role.enum");
 
 var employees = employees_json_1.default.employees;
 var loadBtn = document.querySelector("#loadBtn");
@@ -6391,23 +6390,22 @@ var tableContainer = document.querySelector("#table-container");
 var thead = document.querySelector("#thead");
 var X;
 var Y;
-thead.style.display = "none";
+thead.style.display = "none"; // To show Header Column in the Table
 
 function buildColumns() {
   var employee = employees[0];
   var columns = Object.keys(employee);
   return columns;
-}
+} //To Show all the data of the table togather 
+
 
 function refresh() {
-  var role = role_1.Role; //    const roles=["SuperAdmin","Admin","Subscriber"]
-
+  var role = role_enum_1.Role;
   if (!tableContainer) return;
   var columns = buildColumns();
   var tbody = document.getElementById('tablebody');
   tbody.innerHTML = "";
   employees.forEach(function (emp) {
-    // console.log(emp)
     var row = document.createElement("tr");
     row.setAttribute("id", String(emp.id));
     var columnElements = columns.map(function (col) {
@@ -6420,31 +6418,8 @@ function refresh() {
   });
 }
 
-function editOperation(e, empId) {
-  var currentRow = e.target.parentElement;
-  var columns = buildColumns();
-  var emp = employees.find(function (e) {
-    return e.id == empId;
-  });
-  debugger;
-
-  if (!!emp) {
-    debugger;
-    var columnElements = columns.map(function (col) {
-      console.log(col);
-      var inputControl = document.createElement("input");
-      inputControl.setAttribute("type", "text");
-      inputControl.value = emp[col];
-      return inputControl;
-    });
-    currentRow.innerHTML = "";
-    currentRow.append.apply(currentRow, columnElements);
-    currentRow.append(createSaveButton(emp), createCancelButton(emp));
-  }
-}
-
 function cancelOperation(e, emp) {
-  var currentRow = e.target.parentElement; // let emp=employees.find(e=>e.id==empId);
+  var currentRow = e.target.parentElement;
 
   if (!!emp) {
     var columns = buildColumns();
@@ -6475,51 +6450,43 @@ function deleteOperation(e) {
 
 var onInputChange = function onInputChange(e, emp) {
   emp[e.target.id] = e.target.value;
-  console.log(emp);
-};
+}; //On the click of Edit Button Specific Row become Textable and Save & Delete button Shows 
+
 
 function createEditButton(emp) {
   var editButton = document.createElement("button");
   editButton.innerText = "Edit";
-  editButton.setAttribute("class", "btn btn-info me-2 my-1"); //editButton.setAttribute('onclick', `editOperation(event,'${emp.id}')`);
-  // return editButton;
-  // function editOperation(e:any,empId:string){
-
+  editButton.setAttribute("class", "btn btn-info me-2 my-1");
   editButton.addEventListener("click", function (e) {
     var currentRow = e.target.parentElement;
     var columns = buildColumns();
-    console.log(columns); // let emp=employees.find(e=>e.id==empId);
 
     if (!!emp) {
       var columnElements = columns.map(function (col, i) {
-        debugger;
-        var inputControl;
+        var inputControl; //To Show Role in dropdown while Editing 
 
         if (col == "role") {
-          inputControl = document.createElement("select"); // inputControl.setAttribute("type", "select");
-
-          Object.keys(role_1.Role).forEach(function (ele) {
+          inputControl = document.createElement("select");
+          Object.keys(role_enum_1.Role).forEach(function (ele) {
             if (isNaN(ele)) {
               var option = document.createElement('option');
-              option.value = role_1.Role[ele];
+              option.value = role_enum_1.Role[ele];
               option.innerText = ele;
               inputControl.appendChild(option);
             }
 
             inputControl.value = emp[col];
           });
-        } else if (col == "doj") {
-          debugger;
-          inputControl = document.createElement("input");
-          inputControl.setAttribute("type", "date");
-          inputControl.setAttribute("value", emp[col]);
-        } else {
-          inputControl = document.createElement("input");
-          debugger;
-          inputControl.setAttribute("type", "text");
-          inputControl.setAttribute("value", emp[col]);
-        } // const inputControl: any = document.createElement("input");
-
+        } // To format the date while editing
+        else if (col == "doj") {
+            inputControl = document.createElement("input");
+            inputControl.setAttribute("type", "date");
+            inputControl.setAttribute("value", emp[col]);
+          } else {
+            inputControl = document.createElement("input");
+            inputControl.setAttribute("type", "text");
+            inputControl.setAttribute("value", emp[col]);
+          }
 
         inputControl.setAttribute("class", "form-control");
         inputControl.setAttribute("id", col);
@@ -6536,7 +6503,8 @@ function createEditButton(emp) {
     }
   });
   return editButton;
-}
+} //On click of delete button it deleted the specific row 
+
 
 function createDeleteButton() {
   var deleteButton = document.createElement("button");
@@ -6546,7 +6514,8 @@ function createDeleteButton() {
     deleteOperation(e);
   });
   return deleteButton;
-}
+} //On click of Save Button it update the row On which we do changes
+
 
 function createSaveButton(emp) {
   var saveButton = document.createElement("button");
@@ -6558,18 +6527,19 @@ function createSaveButton(emp) {
     saveOperation(e, emp);
   });
   return saveButton;
-}
+} //on the click of cancel button all textable input feild back to normal input feild
+
 
 function createCancelButton(emp) {
   var cancelButton = document.createElement("button");
   cancelButton.textContent = "Cancel";
-  cancelButton.setAttribute("class", "btn btn-info my-1"); //cancelButton.setAttribute('onclick', `cancelOperation(event,'${emp.id}')`);
-
+  cancelButton.setAttribute("class", "btn btn-info my-1");
   cancelButton.addEventListener("click", function (e) {
     cancelOperation(e, emp);
   });
   return cancelButton;
-}
+} //On the click of load data it shows all the json data iin tabular format
+
 
 loadBtn.addEventListener("click", function (e) {
   if (!tableContainer) return;
@@ -6577,7 +6547,7 @@ loadBtn.addEventListener("click", function (e) {
   loadBtn.innerText = "Refresh data";
   refresh();
 });
-},{"./employees.json":"src/employees.json","./css/bootstrap.min.css":"src/css/bootstrap.min.css","./js/bootstrap.min.js":"src/js/bootstrap.min.js","./common/enums/role":"src/common/enums/role.ts"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./employees.json":"src/employees.json","../src/bootstrap.min.css":"src/bootstrap.min.css","../src/bootstrap.min.js":"src/bootstrap.min.js","./enums/role.enum":"src/enums/role.enum.ts"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -6605,7 +6575,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54608" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53929" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
