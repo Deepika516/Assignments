@@ -1,5 +1,5 @@
-import {IUser} from "../models/users";
-import { Role } from "../common/enums/role";
+import {IUser} from "../interfaces/users";
+import { Role } from "../cmn/enums/role";
 
 export class User<T,U> implements IUser<T,U>
 {

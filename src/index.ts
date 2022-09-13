@@ -1,9 +1,9 @@
 //import "./styles.css";                                 
 import data from "./employees.json";
-import { IUser } from "./models/users";
+import { IUser } from "./interfaces/users";
 import "./css/bootstrap.min.css";
 import "./js/bootstrap.min.js";
-import { Role } from "./common/enums/role";
+import { Role } from "./cmn/enums/role";
 import { User } from "./class/user";
 //import { event } from "jquery";
 
