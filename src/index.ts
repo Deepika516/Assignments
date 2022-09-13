@@ -1,85 +1,54 @@
-//import "./styles.css";                                 
 import data from "./employees.json";
 import { IUser } from "./interfaces/users";
-import "./css/bootstrap.min.css";
-import "./js/bootstrap.min.js";
-import { Role } from "./cmn/enums/role";
-import { User } from "./class/user";
-//import { event } from "jquery";
-
+import "../src/bootstrap.min.css";
+import "../src/bootstrap.min.js";
+import { Role } from "./enums/role.enum";
 
 const employees: IUser<string,number>[] = data.employees as any;
-const loadBtn: any = document.querySelector("#loadBtn");
-const tableContainer: any = document.querySelector("#table-container");
-const thead:any=document.querySelector("#thead");
+const loadBtn: HTMLButtonElement = document.querySelector("#loadBtn");
+const tableContainer:HTMLTableElement = document.querySelector("#table-container");
+const thead: HTMLHeadElement=document.querySelector("#thead");
 let X :IUser<string,number>;
 let Y :IUser<number,string>;
+thead.style.display = "none";
 
- thead.style.display = "none";
-           
-
+// To show Header Column in the Table
 function buildColumns<T>(): string[] {
     const employee = employees[0];
     const columns = Object.keys(employee);
     return columns;
 }
 
-function refresh<X>(): any {
+//To Show all the data of the table togather 
+function refresh<T>(): string {
    const role=Role;
-//    const roles=["SuperAdmin","Admin","Subscriber"]
     if (!tableContainer) return;
     const columns = buildColumns();
-  
-    const tbody: any = document.getElementById('tablebody');
+    const tbody: HTMLElement = document.getElementById('tablebody');
     tbody.innerHTML = "";
     employees.forEach((emp) => {
-        
-        // console.log(emp)
         const row: HTMLTableRowElement = document.createElement("tr");
         row.setAttribute("id", String(emp.id));
         const columnElements = columns.map((col) => {
             const colE1 = document.createElement("td");
-            colE1.innerText = (emp as any)[col] as string;
-            return colE1;
-            
+            colE1.innerText = (emp as IUser<string,number>)[col] as string;
+            return colE1; 
         });
-
         row.append(...columnElements, createEditButton(emp), createDeleteButton());
         tbody.appendChild(row);
     })
 }
 
-function editOperation<T>(e: any, empId: Number): void {
-    let currentRow: HTMLBodyElement = e.target.parentElement;
-    const columns = buildColumns();
-    let emp = employees.find(e => e.id == empId);
-    debugger
-    if (!!emp) {
-        debugger
-        const columnElements = columns.map((col) => {
-            console.log(col);
-            const inputControl: any = document.createElement("input");
-            inputControl.setAttribute("type", "text");
-            inputControl.value = (emp as any)[col] as string;
-            return inputControl;
-        });
-        currentRow.innerHTML = "";
-        currentRow.append(...columnElements);
-        currentRow.append(createSaveButton(emp), createCancelButton(emp));
-    }
-}
 
 function cancelOperation(e: any, emp: IUser<string,number>): void {
     let currentRow: HTMLBodyElement = e.target.parentElement;
-    // let emp=employees.find(e=>e.id==empId);
     if (!!emp) {
         const columns = buildColumns();
         const columnElements = columns.map((col) => {
             const colE1 = document.createElement("td");
-            colE1.innerText = (emp as any)[col] as string;
+            colE1.innerText = (emp as IUser<string,number>)[col] as string;
             return colE1;
         });
-
         currentRow.innerHTML = "";
         currentRow.append(...columnElements);
         currentRow.append(createEditButton(emp), createDeleteButton());
@@ -88,46 +57,36 @@ function cancelOperation(e: any, emp: IUser<string,number>): void {
 
 function saveOperation(e: any, emp: IUser<string,number>): void {
     cancelOperation(e, emp);
-
 }
 
 function deleteOperation(e: any): void {
     let response: any = confirm("Are you sure you want to delete this permanently?");
     if (response) {
-        let tbody: any = document.getElementById('tablebody');
+        let tbody: HTMLElement = document.getElementById('tablebody');
         let currentRow = e.target.parentElement;
         tbody.removeChild(currentRow);
     }
 }
 
-const onInputChange = (e: any, emp: any) => {
+const onInputChange = (e: any, emp:IUser<string,number>) => {
     emp[e.target.id] = e.target.value;
-    console.log(emp)
 }
 
+//On the click of Edit Button Specific Row become Textable and Save & Delete button Shows 
 function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
     const editButton: HTMLButtonElement = document.createElement("button");
     editButton.innerText = "Edit";
     editButton.setAttribute("class", "btn btn-info me-2 my-1");
-    //editButton.setAttribute('onclick', `editOperation(event,'${emp.id}')`);
-    // return editButton;
-
-    // function editOperation(e:any,empId:string){
     editButton.addEventListener("click", (e: any) => {
-
-        let currentRow: HTMLBodyElement = e.target.parentElement;
+    let currentRow: HTMLBodyElement = e.target.parentElement;
         const columns = buildColumns();
-        console.log(columns);
-        // let emp=employees.find(e=>e.id==empId);
         if (!!emp) {
             const columnElements = columns.map((col,i) => {
-                
-                debugger
                 let inputControl: any ;
+                //To Show Role in dropdown while Editing 
                 if (col=="role")
                 {
                      inputControl= document.createElement("select");
-                    // inputControl.setAttribute("type", "select");
                     Object.keys(Role).forEach(function (ele:any) {
                         if (isNaN(ele)) {
                             var option = document.createElement('option');
@@ -135,46 +94,40 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
                             option.innerText = ele;
                             inputControl.appendChild(option);
                         }
-                       
-                        inputControl.value = ((emp as any)[col] as number);
+                        inputControl.value = ((emp as IUser<string,number>)[col] as number);
                     });
                 }
+                // To format the date while editing
                 else if(col=="doj")
                 {
-                    debugger
                 inputControl = document.createElement("input");
                 inputControl.setAttribute("type", "date");
-                inputControl.setAttribute("value", (emp as any)[col]);
+                inputControl.setAttribute("value", (emp as IUser<string,number>)[col]);
                 }
                 else
                 {
-                    inputControl = document.createElement("input");
-                    debugger
+                inputControl = document.createElement("input");
                 inputControl.setAttribute("type", "text");
-                inputControl.setAttribute("value", (emp as any)[col]);
+                inputControl.setAttribute("value", (emp as IUser<string,number>)[col]);
                 }
-                // const inputControl: any = document.createElement("input");
-                inputControl.setAttribute("class","form-control")
-                inputControl.setAttribute("id", col)
-                
+                inputControl.setAttribute("class","form-control");
+                inputControl.setAttribute("id", col);
                 inputControl.addEventListener("change", (e: any) => {
-                    onInputChange(e, emp)
+                    onInputChange(e, emp);
                 })
                 const colE1 = document.createElement("td");
                 colE1.appendChild(inputControl);
                 return colE1;
             });
-
             currentRow.innerHTML = "";
             currentRow.append(...columnElements);
             currentRow.append(createSaveButton(emp), createCancelButton(emp));
-
         }
     })
     return editButton;
-
 }
 
+//On click of delete button it deleted the specific row 
 function createDeleteButton(): HTMLButtonElement {
     const deleteButton: HTMLButtonElement = document.createElement("button");
     deleteButton.innerText = "Delete";
@@ -184,6 +137,7 @@ function createDeleteButton(): HTMLButtonElement {
     })
     return deleteButton;
 }
+//On click of Save Button it update the row On which we do changes
 function createSaveButton(emp: IUser<string,number>): HTMLButtonElement {
     const saveButton: HTMLButtonElement = document.createElement("button");
     saveButton.textContent = "Save";
@@ -195,21 +149,21 @@ function createSaveButton(emp: IUser<string,number>): HTMLButtonElement {
     return saveButton;
 }
 
+//on the click of cancel button all textable input feild back to normal input feild
 function createCancelButton(emp: IUser<string,number>): HTMLButtonElement {
     const cancelButton: HTMLButtonElement = document.createElement("button");
     cancelButton.textContent = "Cancel";
     cancelButton.setAttribute("class", "btn btn-info my-1");
-    //cancelButton.setAttribute('onclick', `cancelOperation(event,'${emp.id}')`);
     cancelButton.addEventListener("click", (e: any) => {
         cancelOperation(e, emp);
     })
     return cancelButton;
 }
 
-loadBtn.addEventListener("click", (e: any) => {
+//On the click of load data it shows all the json data iin tabular format
+loadBtn.addEventListener("click", (e:any) => {
     if (!tableContainer) return;
     thead.style.display = "table-header-group";
-
     loadBtn.innerText = "Refresh data";
     refresh();
 })
