@@ -4,7 +4,7 @@ import "../src/bootstrap.min.css";
 import "../src/bootstrap.min.js";
 import { Role } from "./enums/role.enum";
 
-const employees: IUser<string,number>[] = data.employees as any;
+const employees: IUser<string,number>[] = data.employees as Object;
 const loadBtn: HTMLButtonElement = document.querySelector("#loadBtn");
 const tableContainer:HTMLTableElement = document.querySelector("#table-container");
 const thead: HTMLHeadElement=document.querySelector("#thead");
@@ -19,7 +19,7 @@ function buildColumns<T>(): string[] {
     return columns;
 }
 
-//To Show all the data of the table togather 
+//To Show all the json data in a tabulor format 
 function refresh<T>(): string {
    const role=Role;
     if (!tableContainer) return;
@@ -39,8 +39,8 @@ function refresh<T>(): string {
     })
 }
 
-
-function cancelOperation(e: any, emp: IUser<string,number>): void {
+//working of Cancel button 
+function cancelOperation(e:any, emp: IUser<string,number>): void {
     let currentRow: HTMLBodyElement = e.target.parentElement;
     if (!!emp) {
         const columns = buildColumns();
@@ -55,12 +55,13 @@ function cancelOperation(e: any, emp: IUser<string,number>): void {
     }
 }
 
-function saveOperation(e: any, emp: IUser<string,number>): void {
+function saveOperation(e: MouseEvent, emp: IUser<string,number>): void {
     cancelOperation(e, emp);
 }
 
-function deleteOperation(e: any): void {
-    let response: any = confirm("Are you sure you want to delete this permanently?");
+//working of delete button that when we want to delete a specipic row it should ask then delete
+function deleteOperation(e:any): void {
+    let response: boolean = confirm("Are you sure you want to delete this permanently?");
     if (response) {
         let tbody: HTMLElement = document.getElementById('tablebody');
         let currentRow = e.target.parentElement;
@@ -72,7 +73,7 @@ const onInputChange = (e: any, emp:IUser<string,number>) => {
     emp[e.target.id] = e.target.value;
 }
 
-//On the click of Edit Button Specific Row become Textable and Save & Delete button Shows 
+//On the click of Edit Button Specific Row become Textable and Save & cancel button Shows and edit & delete button hide  
 function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
     const editButton: HTMLButtonElement = document.createElement("button");
     editButton.innerText = "Edit";
@@ -83,17 +84,20 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
         if (!!emp) {
             const columnElements = columns.map((col,i) => {
                 let inputControl: any ;
-                //To Show Role in dropdown while Editing 
+                console.log(typeof inputControl);
+                //To Show Role as enum in dropdown while Editing 
                 if (col=="role")
                 {
                      inputControl= document.createElement("select");
-                    Object.keys(Role).forEach(function (ele:any) {
+                   
+                     Object.keys(Role).forEach(function (ele:string) {
                         if (isNaN(ele)) {
                             var option = document.createElement('option');
                             option.value = Role[ele];
-                            option.innerText = ele;
+                             option.innerText = ele;
                             inputControl.appendChild(option);
                         }
+                     
                         inputControl.value = ((emp as IUser<string,number>)[col] as number);
                     });
                 }
@@ -137,7 +141,8 @@ function createDeleteButton(): HTMLButtonElement {
     })
     return deleteButton;
 }
-//On click of Save Button it update the row On which we do changes
+
+//On click of Save Button it update the row On which we did changes
 function createSaveButton(emp: IUser<string,number>): HTMLButtonElement {
     const saveButton: HTMLButtonElement = document.createElement("button");
     saveButton.textContent = "Save";
@@ -161,7 +166,7 @@ function createCancelButton(emp: IUser<string,number>): HTMLButtonElement {
 }
 
 //On the click of load data it shows all the json data iin tabular format
-loadBtn.addEventListener("click", (e:any) => {
+loadBtn.addEventListener("click", (e:MouseEvent) => {
     if (!tableContainer) return;
     thead.style.display = "table-header-group";
     loadBtn.innerText = "Refresh data";

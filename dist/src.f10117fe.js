@@ -6356,6 +6356,8 @@ var Role;
 },{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
   if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
     if (ar || !(i in from)) {
@@ -6396,7 +6398,7 @@ function buildColumns() {
   var employee = employees[0];
   var columns = Object.keys(employee);
   return columns;
-} //To Show all the data of the table togather 
+} //To Show all the json data in a tabulor format 
 
 
 function refresh() {
@@ -6463,7 +6465,8 @@ function createEditButton(emp) {
 
     if (!!emp) {
       var columnElements = columns.map(function (col, i) {
-        var inputControl; //To Show Role in dropdown while Editing 
+        var inputControl;
+        console.log(_typeof(inputControl)); //To Show Role in dropdown while Editing 
 
         if (col == "role") {
           inputControl = document.createElement("select");
@@ -6575,7 +6578,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53929" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50451" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
