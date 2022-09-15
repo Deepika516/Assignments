@@ -4,7 +4,7 @@ import "../src/bootstrap.min.css";
 import "../src/bootstrap.min.js";
 import { Role } from "./enums/role.enum";
 
-const employees: IUser<string,number>[] = data.employees as Object;
+const employees: IUser<string,number>[] = data.employees as [];
 const loadBtn: HTMLButtonElement = document.querySelector("#loadBtn");
 const tableContainer:HTMLTableElement = document.querySelector("#table-container");
 const thead: HTMLHeadElement=document.querySelector("#thead");
@@ -40,7 +40,7 @@ function refresh<T>(): string {
 }
 
 //working of Cancel button 
-function cancelOperation(e:any, emp: IUser<string,number>): void {
+function cancelOperation(e, emp: IUser<string,number>): void {
     let currentRow: HTMLBodyElement = e.target.parentElement;
     if (!!emp) {
         const columns = buildColumns();
@@ -55,12 +55,13 @@ function cancelOperation(e:any, emp: IUser<string,number>): void {
     }
 }
 
-function saveOperation(e: MouseEvent, emp: IUser<string,number>): void {
+//working of save button
+function saveOperation(e:Event, emp: IUser<string,number>): void {
     cancelOperation(e, emp);
 }
 
 //working of delete button that when we want to delete a specipic row it should ask then delete
-function deleteOperation(e:any): void {
+function deleteOperation(e): void {
     let response: boolean = confirm("Are you sure you want to delete this permanently?");
     if (response) {
         let tbody: HTMLElement = document.getElementById('tablebody');
@@ -69,7 +70,7 @@ function deleteOperation(e:any): void {
     }
 }
 
-const onInputChange = (e: any, emp:IUser<string,number>) => {
+const onInputChange = (e, emp:IUser<string,number>) => {
     emp[e.target.id] = e.target.value;
 }
 
@@ -78,27 +79,26 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
     const editButton: HTMLButtonElement = document.createElement("button");
     editButton.innerText = "Edit";
     editButton.setAttribute("class", "btn btn-info me-2 my-1");
-    editButton.addEventListener("click", (e: any) => {
-    let currentRow: HTMLBodyElement = e.target.parentElement;
+    editButton.addEventListener("click", (e:any) => {
+    let rowCurrent=e.target;    
+    let currentRow: HTMLBodyElement = rowCurrent.parentElement;
         const columns = buildColumns();
         if (!!emp) {
             const columnElements = columns.map((col,i) => {
-                let inputControl: any ;
-                console.log(typeof inputControl);
+                let inputControl: HTMLSelectElement|HTMLInputElement;
                 //To Show Role as enum in dropdown while Editing 
                 if (col=="role")
                 {
                      inputControl= document.createElement("select");
-                   
                      Object.keys(Role).forEach(function (ele:string) {
-                        if (isNaN(ele)) {
+                        if (isNaN(+ele)) {
                             var option = document.createElement('option');
                             option.value = Role[ele];
-                             option.innerText = ele;
+                            option.innerText = ele;
                             inputControl.appendChild(option);
                         }
-                     
-                        inputControl.value = ((emp as IUser<string,number>)[col] as number);
+                        let val=((emp as IUser<string,number>)[col] as number);
+                        inputControl.value = String(val)
                     });
                 }
                 // To format the date while editing
@@ -106,7 +106,9 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
                 {
                 inputControl = document.createElement("input");
                 inputControl.setAttribute("type", "date");
-                inputControl.setAttribute("value", (emp as IUser<string,number>)[col]);
+                let val=((emp as IUser<string,number>)[col]);
+                        inputControl.value = String(val)
+               
                 }
                 else
                 {
@@ -116,7 +118,7 @@ function createEditButton(emp: IUser<string,number>): HTMLButtonElement {
                 }
                 inputControl.setAttribute("class","form-control");
                 inputControl.setAttribute("id", col);
-                inputControl.addEventListener("change", (e: any) => {
+                inputControl.addEventListener("change", (e) => {
                     onInputChange(e, emp);
                 })
                 const colE1 = document.createElement("td");
@@ -159,7 +161,7 @@ function createCancelButton(emp: IUser<string,number>): HTMLButtonElement {
     const cancelButton: HTMLButtonElement = document.createElement("button");
     cancelButton.textContent = "Cancel";
     cancelButton.setAttribute("class", "btn btn-info my-1");
-    cancelButton.addEventListener("click", (e: any) => {
+    cancelButton.addEventListener("click", (e) => {
         cancelOperation(e, emp);
     })
     return cancelButton;

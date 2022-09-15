@@ -6356,8 +6356,6 @@ var Role;
 },{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
   if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
     if (ar || !(i in from)) {
@@ -6418,7 +6416,8 @@ function refresh() {
     row.append.apply(row, __spreadArray(__spreadArray([], columnElements, false), [createEditButton(emp), createDeleteButton()], false));
     tbody.appendChild(row);
   });
-}
+} //working of Cancel button 
+
 
 function cancelOperation(e, emp) {
   var currentRow = e.target.parentElement;
@@ -6434,11 +6433,13 @@ function cancelOperation(e, emp) {
     currentRow.append.apply(currentRow, columnElements);
     currentRow.append(createEditButton(emp), createDeleteButton());
   }
-}
+} //working of save button
+
 
 function saveOperation(e, emp) {
   cancelOperation(e, emp);
-}
+} //working of delete button that when we want to delete a specipic row it should ask then delete
+
 
 function deleteOperation(e) {
   var response = confirm("Are you sure you want to delete this permanently?");
@@ -6452,7 +6453,7 @@ function deleteOperation(e) {
 
 var onInputChange = function onInputChange(e, emp) {
   emp[e.target.id] = e.target.value;
-}; //On the click of Edit Button Specific Row become Textable and Save & Delete button Shows 
+}; //On the click of Edit Button Specific Row become Textable and Save & cancel button Shows and edit & delete button hide  
 
 
 function createEditButton(emp) {
@@ -6460,31 +6461,33 @@ function createEditButton(emp) {
   editButton.innerText = "Edit";
   editButton.setAttribute("class", "btn btn-info me-2 my-1");
   editButton.addEventListener("click", function (e) {
-    var currentRow = e.target.parentElement;
+    var rowCurrent = e.target;
+    var currentRow = rowCurrent.parentElement;
     var columns = buildColumns();
 
     if (!!emp) {
       var columnElements = columns.map(function (col, i) {
-        var inputControl;
-        console.log(_typeof(inputControl)); //To Show Role in dropdown while Editing 
+        var inputControl; //To Show Role as enum in dropdown while Editing 
 
         if (col == "role") {
           inputControl = document.createElement("select");
           Object.keys(role_enum_1.Role).forEach(function (ele) {
-            if (isNaN(ele)) {
+            if (isNaN(+ele)) {
               var option = document.createElement('option');
               option.value = role_enum_1.Role[ele];
               option.innerText = ele;
               inputControl.appendChild(option);
             }
 
-            inputControl.value = emp[col];
+            var val = emp[col];
+            inputControl.value = String(val);
           });
         } // To format the date while editing
         else if (col == "doj") {
             inputControl = document.createElement("input");
             inputControl.setAttribute("type", "date");
-            inputControl.setAttribute("value", emp[col]);
+            var val = emp[col];
+            inputControl.value = String(val);
           } else {
             inputControl = document.createElement("input");
             inputControl.setAttribute("type", "text");
@@ -6517,7 +6520,7 @@ function createDeleteButton() {
     deleteOperation(e);
   });
   return deleteButton;
-} //On click of Save Button it update the row On which we do changes
+} //On click of Save Button it update the row On which we did changes
 
 
 function createSaveButton(emp) {
@@ -6578,7 +6581,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53714" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
