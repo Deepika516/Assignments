@@ -12,17 +12,33 @@ import {IUser} from 'src/app/interfaces/users.interface';
 export class TableComponent implements OnInit {
   employeesjson=data;           
   hideTable = false;
-  role:Role=Role.Subscriber
-  roles=["SuperAdmin","Admin","Subscriber"]
+  role:Role=Role.Subscriber;
+  roles=Object.keys(Role);
+  roleUser=Role;
  
   constructor(){
 
   }
     
   ngOnInit(): void {
-
   }
 
+  getRole(r:string){
+    switch(r)
+    {
+      case "Admin":
+        return Role.Admin;
+
+        case "SuperAdmin":
+        return Role.SuperAdmin;
+
+        case "Subscriber":
+        return Role.Subscriber;
+
+        default:
+         return
+    }
+  }
   //on load button click showing all json data in tabular format
   onClick()
   {
