@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Role } from 'src/app/enums/role.enum';
 import * as data from 'src/json/employee.json';
+import {IUser} from 'src/app/interfaces/users.interface';
 
 @Component({
   selector: 'app-table',
@@ -22,6 +23,7 @@ export class TableComponent implements OnInit {
 
   }
 
+  //on load button click showing all json data in tabular format
   onClick()
   {
     this.hideTable = true;
@@ -29,7 +31,8 @@ export class TableComponent implements OnInit {
     loadbtn.innerHTML = "Refresh Data";
   }
 
-  onEditClick(user: any)
+  //on Edit Button click show specific row in Editable form
+  onEditClick(user:IUser)
   {
     this.employeesjson.employees.forEach(element => {
         element.isEdit=false;
@@ -37,16 +40,19 @@ export class TableComponent implements OnInit {
       user.isEdit = true;
   }
 
-    onSaveClick(user:any){
+  // On Save click save the updated row
+    onSaveClick(user:IUser){
       user.isEdit=false;
     }
 
-    onCancel(user: any){
+    //on click of cancel it shows all the data in normal non editable form
+    onCancel(user:IUser){
       user.isEdit = false;
     }
 
-    onDelete(id:any){
-      let response: any = confirm("Are you sure you want to delete this permanently?");
+    //on  delete click it delete the selected row
+    onDelete(id:number|string){
+      let response: boolean = confirm("Are you sure you want to delete this permanently?");
       if (response)
        {
           for(let i = 0; i < this.employeesjson.employees.length; ++i)
