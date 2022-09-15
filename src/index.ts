@@ -5,7 +5,7 @@ import "../src/bootstrap.min.js";
 import { Role } from "./enums/role.enum";
 
 const employees: IUser<string,number>[] = data.employees as [];
-const loadBtn: HTMLButtonElement = document.querySelector("#loadBtn");
+const loadBtn: HTMLDialogElement = document.querySelector("#loadBtn");
 const tableContainer:HTMLTableElement = document.querySelector("#table-container");
 const thead: HTMLHeadElement=document.querySelector("#thead");
 let X :IUser<string,number>;
@@ -20,7 +20,7 @@ function buildColumns<T>(): string[] {
 }
 
 //To Show all the json data in a tabulor format 
-function refresh<T>(): string {
+function refresh(): string {
    const role=Role;
     if (!tableContainer) return;
     const columns = buildColumns();
